@@ -5,6 +5,7 @@ import { Component, EventEmitter, OnInit, output, Output } from '@angular/core';
   imports: [],
   template: `
   <button (click)="mandaDatiEvento.emit(this.nome)" > Manda dati al parente</button>
+
   `,
   styles: ''
 })
