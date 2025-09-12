@@ -10,7 +10,7 @@ export class Highlight {
 
     this.element.nativeElement.style.textcolor='red'
    }
-
+ 
 @HostListener('mouseenter') onMouseEnter(){
 this.cambiaColore(this.appHighlight) 
 console.log(this.onMouseLeave)
