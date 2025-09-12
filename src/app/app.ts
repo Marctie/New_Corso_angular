@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, signal, ViewChild } from 
 import { RouterOutlet } from '@angular/router';
 import { Prova } from "./prova/prova";
 import { Highlight } from "../direttive/highlight";
+import { Mioservizio } from './mioservizio';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,11 @@ import { Highlight } from "../direttive/highlight";
   <p [appHighlight]= "colore"> ciao sono un paragrafo</p>  
   <p [appHighlight]= "colore"> ciao sono un paragrafo</p>
 
+  @for (item of persone; track $index) {
+    <p [appHighlight]="colore">Nome:{{item.nome}}</p>
+    <p [appHighlight]="colorCognome">Cognome:{{item.cognome}}</p>
+  }
+
 
   <input #inputSaluti value="ciao"> 
 <button (click)="onClick()"></button>  
@@ -20,6 +26,10 @@ import { Highlight } from "../direttive/highlight";
   styles: ''
 })
 export class App implements OnInit, AfterViewInit{
+  
+  colore='purple';
+  colorCognome='red';
+
   ngAfterViewInit(): void {
         console.log(this.inputSaluti)
         }
@@ -27,20 +37,26 @@ export class App implements OnInit, AfterViewInit{
   @ViewChild('inputSaluti')
   inputSaluti!: ElementRef;
   valore= "ciaoooo bellooooooo"
-colore='purple';
-persone =[
-  {nome:"Luca",cognome:"Rossi", isOnline:"true", color:'blue'},  
-  {nome:"edd",cognome:"rer", isOnline:"true", color:'red'},
-  {nome:"dad",cognome:"eee", isOnline:"false", color:'green'},
-  {nome:"xer",cognome:"Roqqqssi", isOnline:"false", color:'pinkc'},
-]
+
+
+
 
 onRiceviDati(value:string){
 console.log(value)
 }
 
+constructor(private Mioservizio: Mioservizio){
+}
+
+ persone=[ 
+    {nome:"Marco", cognome:"Peluso" },
+    {nome:"Marcox", cognome:"Pelusoxx" },
+    {nome:"Marcoxx", cognome:"Pelusoxxx" },
+  ]
+
 ngOnInit():void{
 console.log(this.ngAfterViewInit)
+console.log(this.Mioservizio.list)
 }
 
 onClick(){
