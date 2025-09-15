@@ -8,26 +8,31 @@ import { Mioservizio } from './mioservizio';
   selector: 'app-root',
   imports: [RouterOutlet, Prova, Highlight],
   template: `
-  <app-prova (mandaDatiEvento)="onRiceviDati($event)" >
-  </app-prova>
+  <!-- <app-prova (mandaDatiEvento)="onRiceviDati($event)" >
+  </app-prova> -->
     
   <p [appHighlight]= "colore"> ciao sono un paragrafo</p>  
   <p [appHighlight]= "colore"> ciao sono un paragrafo</p>
 
   @for (item of persone; track $index) {
-    <p [appHighlight]="colore">Nome:{{item.nome}}</p>
-    <p [appHighlight]="colorCognome">Cognome:{{item.cognome}}</p>
+    @if (item.isOnline === true) { 
+          <p [appHighlight]="colore">Nome:{{item.nome}} Cognome:{{item.cognome}} {{item.isOnline ? 'online':'offline' }}</p>
+  } @else {
+       <p [appHighlight]="colorCognome">Nome:{{item.nome}} Cognome:{{item.cognome}} {{item.isOnline ? 'online':'offline' }}</p>
+    }
   }
-
-
-  <input #inputSaluti value="ciao"> 
-<button (click)="onClick()"></button>  
+  
+<app-prova>
+  
+</app-prova>
+  <input #inputSaluti placeholder="scrivimi qualcosa"> 
+<button (click)="onRiceviDati(inputSaluti)">sono un bottone</button>  
   `,
   styles: ''
 })
 export class App implements OnInit, AfterViewInit{
   
-  colore='purple';
+  colore='green';
   colorCognome='red';
 
   ngAfterViewInit(): void {
@@ -41,17 +46,19 @@ export class App implements OnInit, AfterViewInit{
 
 
 
-onRiceviDati(value:string){
-console.log(value)
+onRiceviDati(value:HTMLInputElement){
+console.log(value.value)
 }
 
 constructor(private Mioservizio: Mioservizio){
 }
 
  persone=[ 
-    {nome:"Marco", cognome:"Peluso" },
-    {nome:"Marcox", cognome:"Pelusoxx" },
-    {nome:"Marcoxx", cognome:"Pelusoxxx" },
+    {nome:"Marco", cognome:"Peluso", isOnline:true },
+    {nome:"Marcox", cognome:"Pelusoxx",isOnline:false },
+    {nome:"Marcoxx", cognome:"Pelusoxxx", isOnline:true }, 
+    {nome:"Marcoxfx", cognome:"Pelusofxxx", isOnline:false },
+
   ]
 
 ngOnInit():void{
