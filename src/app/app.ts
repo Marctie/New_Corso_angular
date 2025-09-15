@@ -16,17 +16,17 @@ import { Mioservizio } from './mioservizio';
 
   @for (item of persone; track $index) {
     @if (item.isOnline === true) { 
-          <p [appHighlight]="colore">Nome:{{item.nome}} Cognome:{{item.cognome}} {{item.isOnline ? 'online':'offline' }}</p>
+          <p [appHighlight]="colore">Nome:{{item.nome}} Cognome:{{item.cognome}} {{item.isOnline ? 'online':'offline'}}</p>
   } @else {
-       <p [appHighlight]="colorCognome">Nome:{{item.nome}} Cognome:{{item.cognome}} {{item.isOnline ? 'online':'offline' }}</p>
+       <p [appHighlight]="colorCognome">Nome:{{item.nome}} Cognome:{{item.cognome}} {{item.isOnline ? 'onlinee':'offlinee'}}</p>
     }
   }
   
 <app-prova>
   
 </app-prova>
-  <input #inputSaluti placeholder="scrivimi qualcosa"> 
-<button (click)="onRiceviDati(inputSaluti)">sono un bottone</button>  
+  <input #inputSaluti placeholder="scrivimi qqualcosa"> 
+<button (click)="onRiceviDati(inputSaluti)">sono un bottonee</button>  
   `,
   styles: ''
 })
