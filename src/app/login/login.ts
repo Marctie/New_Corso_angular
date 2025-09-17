@@ -1,9 +1,10 @@
-import { Component, computed, ElementRef, inject, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, computed, ElementRef, EventEmitter, inject, Inject, OnInit, Output, output, viewChild, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RecoveryData } from '../servicies/recovery-data';
 import { timeout } from 'rxjs';
-import { JsonPipe } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { App } from '../app';
 
 @Component({
   selector: 'app-login',
@@ -18,48 +19,49 @@ import { RouterLink } from '@angular/router';
     </form>
 
     <pre>
-      {{userData()|json}}
-    </pre>
-    
-    <button routerLink="/" #comeBack>Back Home</button>
+      {{ userData() | json }}
+    </pre
+    >
+    <button  routerLink="/">Back Home</button>
   `,
 })
 export class Login implements OnInit {
   loginform: FormGroup = new FormGroup({});
   username: string | undefined;
   password: any;
-  userData= computed(()=>{
-    const userdata=this.recoveryData.userData();
-    return userdata
-  })
-recoveryData= inject(RecoveryData)
-
+  // @ViewChild(App)statBool!:App
+  userData = computed(() => {
+    const userdata = this.recoveryData.userData();
+    return userdata;
+  });
+  recoveryData = inject(RecoveryData);
   ngOnInit(): void {
     this.loginform = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
-  // this.recoveryData.insertLoginData().subscribe(
-  //   dataResponce => console.log(dataResponce)
-  // )
+    // this.recoveryData.insertLoginData().subscribe(
+    //   dataResponce => console.log(dataResponce)
+    // )
 
-//   this.recoveryData.updateUserData()
-// console.log(this.recoveryData.userLogin)
+    //   this.recoveryData.updateUserData()
+    // console.log(this.recoveryData.userLogin)
 
-// this.recoveryData.getUserData();
-// console.log(this.userData)
+    // this.recoveryData.getUserData();
+    // console.log(this.userData)
 
-this.recoveryData.deleteUser("0ab6");
+    this.recoveryData.deleteUser('0ab6');
   }
 
   onSubmit(): void {
     console.log(this.loginform);
-    console.log(this.username,this.password)
+    console.log(this.username, this.password);
   }
 
-    @ViewChild('comeBack')
-  comeBack!: ElementRef;
-  val = false;
+  backHome(){
+// this.statBool.showAll= true
+
+  }
+
+
 }
-
-

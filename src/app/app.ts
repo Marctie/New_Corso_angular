@@ -12,34 +12,40 @@ import { Prova } from './prova/prova';
 import { Highlight } from '../direttive/highlight';
 import { Mioservizio } from './mioservizio';
 import { Login } from './login/login';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   imports: [Prova, Highlight, Login, RouterModule, RouterLink, RouterOutlet],
   template: `
     <!-- <app-prova (mandaDatiEvento)="onRiceviDati($event)" >
-  </app-prova> -->
-
+    </app-prova> -->
     <!-- <p [appHighlight]="colore">ciao sono un paragrafo</p>
     <p [appHighlight]="colore">ciao sono un paragrafo</p> -->
+    <!--<app-prova> </app-prova>-->
+    <!-- <input #inputSaluti placeholder="scrivimi qualcosa" /> -->
+    <!-- <button (click)="onRiceviDati(inputSaluti)">sono un bottone</button> -->
 
-    @if(showAll){ @for (item of persone; track $index) { @if (item.isOnline === true) {
+    @if(showAll){ 
+      @for (item of persone; track $index) { @if (item.isOnline === true) {
     <p [appHighlight]="colore">
       Nome:{{ item.nome }} Cognome:{{ item.cognome }} {{ item.isOnline ? 'online' : 'offline' }}
     </p>
     } @else {
     <p [appHighlight]="colorCognome">
-      Nome:{{ item.nome }} Cognome:{{ item.cognome }} {{ item.isOnline ? 'onlinee' : 'offlinee' }}
+      Nome:{{ item.nome }} Cognome:{{ item.cognome }} {{ item.isOnline ? 'online' : 'offline' }}
     </p>
     } }
-    <!--<app-prova> </app-prova>-->
-    <input #inputSaluti placeholder="scrivimi qqualcosa" />
-    <button (click)="onRiceviDati(inputSaluti)">sono un bottonee</button>
-    <button (click)="toLogin()" >Vai alla Login</button>
+    <button (click)="toLogin()" class="center">Vai alla Login</button>
     }
     <router-outlet></router-outlet>
   `,
-  styles: '',
+  styles: `
+  .center{
+    display:flex;
+    alignment:center
+  }
+  `,
 })
 export class App implements OnInit, AfterViewInit {
   colore = 'green';
@@ -54,22 +60,17 @@ export class App implements OnInit, AfterViewInit {
   inputSaluti!: ElementRef;
   valore = 'ciaoooo bellooooooo';
 
-   
-
-
   constructor(private Mioservizio: Mioservizio, private router: Router) {}
 
   persone = [
     { nome: 'Marco', cognome: 'Peluso', isOnline: true },
-    { nome: 'Marcox', cognome: 'Pelusoxx', isOnline: false },
-    { nome: 'Marcoxx', cognome: 'Pelusoxxx', isOnline: true },
-    { nome: 'Marcoxfx', cognome: 'Pelusofxxx', isOnline: false },
+    { nome: 'Marco 2', cognome: 'Peluso 2', isOnline: false },
   ];
 
   ngOnInit(): void {
-    console.log(this.ngAfterViewInit);
     console.log(this.Mioservizio.list);
     this.showAll = true;
+    console.log(this.showAll, " leggimi marco dovrei essere true ")
   }
 
   onClick() {
@@ -83,5 +84,11 @@ export class App implements OnInit, AfterViewInit {
   toLogin() {
     this.router.navigate(['/login']);
     this.showAll = false;
+    console.log(this.showAll, "leggimi marco sono nel child dovrei essere false  ")
+  }
+
+  riceviBool(value: boolean) {
+    console.log('passaggio dal child', value);
+    this.showAll = value;
   }
 }
