@@ -9,4 +9,11 @@ export class Mioservizio {
     {nome:"Marcox", cognome:"Pelusoxx" },
     {nome:"Marcoxx", cognome:"Pelusoxxx" },
   ]
+
+  public showAll:boolean=false
+
+  // mostraElemento(showAll:boolean):boolean{
+  //   return showAll=true
+  // }
+
 }

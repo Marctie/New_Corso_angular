@@ -3,12 +3,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RecoveryData } from '../servicies/recovery-data';
 import { timeout } from 'rxjs';
 import { CommonModule, JsonPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { App } from '../app';
+import { Mioservizio } from '../mioservizio';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, JsonPipe, RouterLink],
+  imports: [ReactiveFormsModule, JsonPipe,],
   template: `
     <form [formGroup]="loginform" (ngSubmit)="onSubmit()">
       <p>username:</p>
@@ -22,7 +23,7 @@ import { App } from '../app';
       {{ userData() | json }}
     </pre
     >
-    <button  routerLink="/">Back Home</button>
+    <button (click)="cambia()" >Back Home</button>
   `,
 })
 export class Login implements OnInit {
@@ -35,6 +36,10 @@ export class Login implements OnInit {
     return userdata;
   });
   recoveryData = inject(RecoveryData);
+  constructor(private mioServizio:Mioservizio,
+    private router:Router
+  ){}
+
   ngOnInit(): void {
     this.loginform = new FormGroup({
       username: new FormControl('', Validators.required),
@@ -51,6 +56,7 @@ export class Login implements OnInit {
     // console.log(this.userData)
 
     this.recoveryData.deleteUser('0ab6');
+    console.log(this.mioServizio.showAll, "stampa del servizio")
   }
 
   onSubmit(): void {
@@ -58,10 +64,11 @@ export class Login implements OnInit {
     console.log(this.username, this.password);
   }
 
-  backHome(){
-// this.statBool.showAll= true
-
-  }
+cambia(){
+  this.mioServizio.showAll=true
+  console.log(this.mioServizio.showAll, "stampa dal back ")
+  this.router.navigate(['/'])
+}
 
 
 }

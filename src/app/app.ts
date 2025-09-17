@@ -26,7 +26,7 @@ import { CommonModule } from '@angular/common';
     <!-- <input #inputSaluti placeholder="scrivimi qualcosa" /> -->
     <!-- <button (click)="onRiceviDati(inputSaluti)">sono un bottone</button> -->
 
-    @if(showAll){ 
+    @if(mioservizio.showAll){ 
       @for (item of persone; track $index) { @if (item.isOnline === true) {
     <p [appHighlight]="colore">
       Nome:{{ item.nome }} Cognome:{{ item.cognome }} {{ item.isOnline ? 'online' : 'offline' }}
@@ -50,7 +50,6 @@ import { CommonModule } from '@angular/common';
 export class App implements OnInit, AfterViewInit {
   colore = 'green';
   colorCognome = 'red';
-  showAll = true;
   ngAfterViewInit(): void {
     console.log(this.inputSaluti);
   }
@@ -60,7 +59,7 @@ export class App implements OnInit, AfterViewInit {
   inputSaluti!: ElementRef;
   valore = 'ciaoooo bellooooooo';
 
-  constructor(private Mioservizio: Mioservizio, private router: Router) {}
+  constructor(public mioservizio: Mioservizio, private router: Router) {}
 
   persone = [
     { nome: 'Marco', cognome: 'Peluso', isOnline: true },
@@ -68,9 +67,9 @@ export class App implements OnInit, AfterViewInit {
   ];
 
   ngOnInit(): void {
-    console.log(this.Mioservizio.list);
-    this.showAll = true;
-    console.log(this.showAll, " leggimi marco dovrei essere true ")
+    console.log(this.mioservizio.list);
+    this.mioservizio.showAll = true;
+    
   }
 
   onClick() {
@@ -83,12 +82,8 @@ export class App implements OnInit, AfterViewInit {
 
   toLogin() {
     this.router.navigate(['/login']);
-    this.showAll = false;
-    console.log(this.showAll, "leggimi marco sono nel child dovrei essere false  ")
+    this.mioservizio.showAll = false
   }
 
-  riceviBool(value: boolean) {
-    console.log('passaggio dal child', value);
-    this.showAll = value;
-  }
+
 }
